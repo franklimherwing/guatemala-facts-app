@@ -1,30 +1,54 @@
+/* Guatemalan Facts App - Version 1.1 */
+
 body{
-font-family: Arial, sans-serif;
-background:#f4f6f8;
+font-family:Arial, sans-serif;
+background:#e8f4f8;
+margin:0;
+padding:20px;
 text-align:center;
-padding:40px;
 }
 
 .container{
 background:white;
-padding:30px;
-border-radius:12px;
+padding:25px;
+border-radius:14px;
 max-width:600px;
 margin:auto;
-box-shadow:0 5px 15px rgba(0,0,0,0.1);
+box-shadow:0 6px 20px rgba(0,0,0,0.1);
 }
 
 button{
-padding:12px 20px;
-margin:10px;
+padding:12px 18px;
+margin:8px;
 border:none;
-background:#2c7a7b;
+background:#0077b6;
 color:white;
-border-radius:6px;
+border-radius:8px;
 cursor:pointer;
 font-size:16px;
 }
 
 button:hover{
-background:#285e61;
+background:#023e8a;
+}
+
+.fade{
+opacity:1;
+transition:opacity .35s ease-in-out;
+}
+
+.fade-out{
+opacity:0;
+}
+
+.search{
+padding:10px;
+width:80%;
+margin:10px;
+}
+
+.progress{
+font-size:14px;
+color:#555;
+margin-top:10px;
 }
