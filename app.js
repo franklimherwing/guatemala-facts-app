@@ -1,124 +1,92 @@
-// Guatemalan Facts App - Version 1.1
+// Guatemalan Facts App - Version 1.2
 
 const app=document.getElementById("app");
-let currentFacts=[];
+
+let factList=[];
 let index=0;
-let categoryName="";
+let startX=0;
 
-function transition(render){
-app.classList.add("fade-out");
-setTimeout(()=>{
-render();
-app.classList.remove("fade-out");
-},300);
-}
-
-function speak(text){
-const msg=new SpeechSynthesisUtterance(text);
-speechSynthesis.speak(msg);
-}
-
-function welcome(){
-transition(()=>{
+function renderWelcome(){
 app.innerHTML=`
 <div class="container">
-<h1>Welcome to Guatemalan Facts</h1>
+<h1>Guatemalan Facts</h1>
 <h3>by Franklim Herwing</h3>
 <button onclick="menu()">Start</button>
 </div>`;
-});
 }
 
 function menu(){
-transition(()=>{
 app.innerHTML=`
 <div class="container">
-<h2>Main Menu</h2>
-<button onclick="playRandom()">🎲 Play Random</button>
-<button onclick="categories()">📚 Play by Categories</button>
-<button onclick="quiz()">🧠 Quiz Mode</button>
-<input class="search" placeholder="Search facts..." oninput="searchFacts(this.value)">
-<div id="searchResults"></div>
+<button onclick="playRandom()">🎲 Random</button>
+<button onclick="showCategories()">📚 Categories</button>
 </div>`;
-});
 }
 
-function categories(){
+function showCategories(){
 let buttons="";
-for(let c in facts){
-buttons+=`<button onclick="startCategory('${c}')">📌 ${c}</button>`;
-}
+Object.keys(facts).forEach(c=>{
+buttons+=`<button onclick="startCategory('${c}')">${c}</button>`;
+});
 
-transition(()=>{
-app.innerHTML=`<div class="container">
-<h2>Select Category</h2>
+app.innerHTML=`
+<div class="container">
 ${buttons}
 <button onclick="menu()">Back</button>
 </div>`;
-});
 }
 
 function startCategory(cat){
-categoryName=cat;
-currentFacts=[...facts[cat]];
+factList=[...facts[cat]];
 index=0;
-showFact();
+showCard();
 }
 
 function playRandom(){
-const all=[].concat(...Object.values(facts));
-categoryName="Random Facts";
-currentFacts=all.sort(()=>0.5-Math.random());
+factList=[].concat(...Object.values(facts));
+factList.sort(()=>0.5-Math.random());
 index=0;
-showFact();
+showCard();
 }
 
-function showFact(){
-transition(()=>{
+function showCard(){
+
 app.innerHTML=`
 <div class="container">
-<h2>${categoryName}</h2>
-<p>${currentFacts[index]}</p>
-<div class="progress">${index+1} / ${currentFacts.length}</div>
-<button onclick="nextFact()">Next</button>
-<button onclick="speak(currentFacts[index])">🔊 Listen</button>
+<div id="card" class="card">
+${factList[index]}
+</div>
+<button onclick="next()">Next</button>
 <button onclick="menu()">Back</button>
 </div>`;
+
+enableSwipe();
+}
+
+function next(){
+const card=document.getElementById("card");
+card.classList.add("slide-out");
+
+setTimeout(()=>{
+index=(index+1)%factList.length;
+showCard();
+},300);
+}
+
+function enableSwipe(){
+const card=document.getElementById("card");
+
+card.addEventListener("touchstart",e=>{
+startX=e.touches[0].clientX;
+});
+
+card.addEventListener("touchend",e=>{
+let endX=e.changedTouches[0].clientX;
+
+if(startX-endX>50){
+next();
+}
 });
 }
 
-function nextFact(){
-index=(index+1)%currentFacts.length;
-showFact();
-}
-
-function searchFacts(text){
-let results="";
-for(let cat in facts){
-facts[cat].forEach(f=>{
-if(f.toLowerCase().includes(text.toLowerCase())){
-results+=`<p>${f}</p>`;
-}
-});
-}
-document.getElementById("searchResults").innerHTML=results;
-}
-
-function quiz(){
-const all=[].concat(...Object.values(facts));
-const fact=all[Math.floor(Math.random()*all.length)];
-
-transition(()=>{
-app.innerHTML=`
-<div class="container">
-<h2>Quiz Mode</h2>
-<p>Read this fact aloud:</p>
-<p>${fact}</p>
-<button onclick="speak('${fact}')">Play Audio</button>
-<button onclick="menu()">Back</button>
-</div>`;
-});
-}
-
-welcome();
-
+renderWelcome();
