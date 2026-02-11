@@ -1,21 +1,24 @@
-// Guatemalan Facts App - Version 1.2
+const CACHE_NAME = "facts-app-v1.3";
 
-self.addEventListener("install",e=>{
-e.waitUntil(
-caches.open("gtfacts-v1.2").then(cache=>{
-return cache.addAll([
-"./",
-"./index.html",
-"./style.css",
-"./app.js",
-"./facts.js"
-]);
-})
+const FILES_TO_CACHE = [
+"/",
+"index.html",
+"styles.css",
+"app.js",
+"facts.js",
+"manifest.json"
+];
+
+self.addEventListener("install",event=>{
+event.waitUntil(
+caches.open(CACHE_NAME)
+.then(cache=>cache.addAll(FILES_TO_CACHE))
 );
 });
 
-self.addEventListener("fetch",e=>{
-e.respondWith(
-caches.match(e.request).then(res=>res||fetch(e.request))
+self.addEventListener("fetch",event=>{
+event.respondWith(
+caches.match(event.request)
+.then(response=>response || fetch(event.request))
 );
 });
