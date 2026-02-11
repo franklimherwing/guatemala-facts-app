@@ -1,9 +1,8 @@
 {
-"name":"Guatemalan Facts v1.1",
+"name":"Guatemalan Facts v1.2",
 "short_name":"GT Facts",
 "start_url":"index.html",
 "display":"standalone",
 "background_color":"#ffffff",
 "theme_color":"#0077b6"
 }
-
