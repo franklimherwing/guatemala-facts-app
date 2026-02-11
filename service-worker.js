@@ -1,21 +1,20 @@
-self.addEventListener('install', function(event) {
-    event.waitUntil(
-        caches.open('facts-cache-v1').then(function(cache) {
-            return cache.addAll([
-                '/',
-                '/index.html',
-                '/styles.css',
-                '/app.js',
-                '/facts.js',
-            ]);
-        })
-    );
+const CACHE_NAME="facts-v2.0";
+
+const urls=[
+"index.html",
+"styles.css",
+"app.js",
+"facts.js"
+];
+
+self.addEventListener("install",e=>{
+e.waitUntil(
+caches.open(CACHE_NAME).then(c=>c.addAll(urls))
+);
 });
 
-self.addEventListener('fetch', function(event) {
-    event.respondWith(
-        caches.match(event.request).then(function(response) {
-            return response || fetch(event.request);
-        })
-    );
+self.addEventListener("fetch",e=>{
+e.respondWith(
+caches.match(e.request).then(r=>r||fetch(e.request))
+);
 });
