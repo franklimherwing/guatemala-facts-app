@@ -1,16 +1,26 @@
+<!-- Guatemalan Facts App - Version 1.1 -->
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Guatemalan Facts</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guatemalan Facts v1.1</title>
 <link rel="stylesheet" href="style.css">
+<link rel="manifest" href="manifest.json">
 </head>
+
 <body>
 
-<div id="app"></div>
+<div id="app" class="fade"></div>
 
 <script src="facts.js"></script>
 <script src="app.js"></script>
+
+<script>
+if ('serviceWorker' in navigator) {
+navigator.serviceWorker.register('service-worker.js');
+}
+</script>
 
 </body>
 </html>
