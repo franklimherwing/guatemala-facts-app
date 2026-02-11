@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Facts Flashcard App v1.2</title>
+<title>Facts Flashcards v2.0</title>
 <link rel="stylesheet" href="styles.css">
 <link rel="manifest" href="manifest.json">
 </head>
@@ -14,21 +14,30 @@
 
 <header>
 <h1>Facts Flashcards</h1>
-<span class="version">v1.2</span>
+<span id="version">v2.0</span>
 </header>
+
+<div class="controls">
+<input id="searchBox" placeholder="Search facts...">
+<button id="randomBtn">Random</button>
+<button id="darkBtn">Dark</button>
+</div>
 
 <main>
 <div id="card" class="card">
-<p id="factText">Loading facts...</p>
+<p id="factText"></p>
 </div>
 
-<button id="nextBtn">Next Fact</button>
+<div class="progress">
+<span id="counter"></span>
+</div>
+
+<button id="nextBtn">Next</button>
 </main>
 
 </div>
 
 <script src="facts.js"></script>
 <script src="app.js"></script>
-
 </body>
 </html>
