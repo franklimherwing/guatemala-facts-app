@@ -1,12 +1,29 @@
-// Guatemalan Facts App - Version 1.1
+// Guatemalan Facts App - Version 1.2
 
-const facts={
-"First Impressions Guide":["Guatemalans greet warmly.","Politeness is very important."],
-"History & Landmarks":["Tikal is a major Mayan city.","Antigua is a UNESCO site."],
-"Culture & Daily Life":["Markets are central.","Family is highly valued."],
-"Religion & Spirituality":["Christianity is common.","Mayan traditions remain."],
-"Food & Flavors":["Pepian is traditional.","Tamales are popular."],
-"Nature & Geography":["Over 30 volcanoes exist.","Lake Atitlan is famous."],
-"Practical Etiquette & Tips":["Always greet first.","Respect elders."],
-"Common Experiences (What to Expect)":["Chicken buses are colorful.","Markets are busy."]
-};
+const categories=[
+"First Impressions Guide",
+"History & Landmarks",
+"Culture & Daily Life",
+"Religion & Spirituality",
+"Food & Flavors",
+"Nature & Geography",
+"Practical Etiquette & Tips",
+"Common Experiences (What to Expect)"
+];
+
+const facts={};
+
+categories.forEach(cat=>{
+facts[cat]=[];
+});
+
+/* AUTO GENERATE 1000 SAMPLE FACTS
+Replace later with your real 500+ Guatemala facts book
+*/
+let count=1;
+
+while(count<=1000){
+const cat=categories[count % categories.length];
+facts[cat].push("Guatemala Fact #"+count+" — Sample imported fact placeholder.");
+count++;
+}
