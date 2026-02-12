@@ -1,5 +1,5 @@
-// Guatemala Facts App - Version 1.10
-const APP_VERSION = "1.10";
+// Guatemala Facts App - Version 1.11
+const APP_VERSION = "1.11";
 const app = document.getElementById("app");
 
 // State management
@@ -8,7 +8,7 @@ let currentCategoryFacts = [];
 let currentCategory = null;
 
 // Footer credit text (shortened version)
-const FOOTER_CREDIT = "© 2026 Franklin D. Herwing • Trinity EV Guatemala Mission";
+const FOOTER_CREDIT = "© Built by Franklim D. Herwing • Trinity EV Guatemala 2026 Mission";
 
 // Debug - verify facts loaded
 console.log("Guatemala Facts App v" + APP_VERSION);
