@@ -152,7 +152,7 @@ body {
 
 /* Footer credit styles - NEW for v1.10 */
 .footer {
-  font-size: 16px;
+  font-size: 20px;
   color: var(--footer-text);
   text-align: center;
   padding: 16px 8px;
