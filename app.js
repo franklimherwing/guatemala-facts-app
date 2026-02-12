@@ -1,75 +1,65 @@
-const APP_VERSION="1.5";
-
 const app=document.getElementById("app");
 
-function clearApp(){
-app.innerHTML="";
-}
-
-function createCard(text,size,click){
-const div=document.createElement("div");
-div.className="card "+size;
-div.innerHTML=text+"<div class='small-next'>next</div>";
-div.onclick=click;
-return div;
-}
-
 function showStart(){
-clearApp();
-app.appendChild(createCard("START","big",showMenu));
+app.innerHTML=`
+<div class="card start-card" onclick="showOptions()">
+START
+<div class="next">Version ${APP_VERSION}</div>
+</div>`;
 }
 
-function showMenu(){
-clearApp();
-
-app.appendChild(createCard("Random Game","big",startRandom));
-app.appendChild(createCard("By Category","big",showCategories));
+function showOptions(){
+app.innerHTML=`
+<div>
+<div class="card option-card" onclick="startRandom()">Random Game</div>
+<div class="card option-card" onclick="showCategories()">By Category</div>
+</div>`;
 }
 
 function startRandom(){
-let shuffled=[...facts].sort(()=>Math.random()-0.5);
-playFacts(shuffled);
+showRandomFact();
+}
+
+function showRandomFact(){
+let fact=facts[Math.floor(Math.random()*facts.length)];
+
+app.innerHTML=`
+<div class="card fact-card" onclick="showRandomFact()">
+${fact.Fact}
+<div class="next">next</div>
+</div>`;
 }
 
 function showCategories(){
-clearApp();
 
 let categories=[...new Set(facts.map(f=>f.Category))];
 
-categories.forEach(cat=>{
-app.appendChild(createCard(cat,"medium",()=>{
-let filtered=facts.filter(f=>f.Category===cat);
-playFacts(filtered);
-}));
+let html="<div>";
+
+categories.forEach(c=>{
+html+=`<div class="card category-card" onclick="startCategory('${c}')">${c}</div>`;
 });
+
+html+="</div>";
+
+app.innerHTML=html;
 }
 
-function playFacts(list){
-let index=0;
+let currentCategoryFacts=[];
 
-function next(){
-clearApp();
-
-if(index>=list.length) index=0;
-
-let fact=list[index];
-
-app.appendChild(createCard(
-"<b>"+fact.Title+"</b><br><br>"+fact.Fact,
-"big",
-()=>{
-index++;
-next();
-}
-));
-
+function startCategory(cat){
+currentCategoryFacts=facts.filter(f=>f.Category===cat);
+showCategoryFact();
 }
 
-next();
+function showCategoryFact(){
+let fact=currentCategoryFacts[Math.floor(Math.random()*currentCategoryFacts.length)];
+
+app.innerHTML=`
+<div class="card fact-card" onclick="showCategoryFact()">
+${fact.Fact}
+<div class="next">next</div>
+</div>`;
 }
 
 showStart();
-
-if('serviceWorker' in navigator){
-navigator.serviceWorker.register('service-worker.js');
-}
