@@ -3,34 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Guatemala Facts App v1.4</title>
+<title>Guatemala Facts Flashcards v1.5</title>
 
 <link rel="stylesheet" href="style.css">
 <link rel="manifest" href="manifest.json">
-
-<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 </head>
 
 <body>
 
 <header>
-<h1>Guatemala Facts App</h1>
-<span class="version">v1.4</span>
+<h1>Guatemala Facts Flashcards</h1>
+<div class="version">Version 1.5</div>
 </header>
 
-<div class="controls">
-<input id="search" placeholder="Buscar / Search">
-<button onclick="randomFact()">🎲 Random</button>
-<button onclick="toggleLanguage()">🌐 ES/EN</button>
-</div>
-
-<div id="categories"></div>
-<div id="facts-container"></div>
-
-<div id="map"></div>
+<div id="app"></div>
 
 <script src="facts.js"></script>
 <script src="app.js"></script>
+
 </body>
 </html>
