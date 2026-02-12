@@ -1,11 +1,14 @@
-// Guatemala Facts App - Version 1.9
-const APP_VERSION = "1.9";
+// Guatemala Facts App - Version 1.10
+const APP_VERSION = "1.10";
 const app = document.getElementById("app");
 
 // State management
 let lastFactIndex = -1;
 let currentCategoryFacts = [];
 let currentCategory = null;
+
+// Footer credit text (shortened version)
+const FOOTER_CREDIT = "© 2026 Franklin D. Herwing • Trinity EV Guatemala Mission";
 
 // Debug - verify facts loaded
 console.log("Guatemala Facts App v" + APP_VERSION);
@@ -27,24 +30,32 @@ function escapeHTML(text) {
 // Navigation functions
 window.showStart = function() {
   app.innerHTML = `
-    <div class="card start-card" onclick="showOptions()">
-      🇬🇹
-      <div style="font-size: 0.7em; margin-top: 20px;">START</div>
-      <div class="next">Version ${APP_VERSION}</div>
+    <div style="width:100%; display:flex; flex-direction:column; min-height:100vh;">
+      <div style="flex:1; display:flex; flex-direction:column; justify-content:center;">
+        <div class="card start-card" onclick="showOptions()">
+          🇬🇹
+          <div style="font-size: 0.7em; margin-top: 20px;">START</div>
+          <div class="next">Version ${APP_VERSION}</div>
+        </div>
+      </div>
+      <div class="footer">${FOOTER_CREDIT}</div>
     </div>`;
 };
 
 window.showOptions = function() {
   app.innerHTML = `
-    <div style="width:100%">
-      <div class="card option-card" onclick="startRandom()">
-        🎲 Random Game
-        <div class="next">surprise me!</div>
+    <div style="width:100%; display:flex; flex-direction:column; min-height:100vh;">
+      <div style="flex:1; display:flex; flex-direction:column; justify-content:center;">
+        <div class="card option-card" onclick="startRandom()">
+          🎲 Random Game
+          <div class="next">surprise me!</div>
+        </div>
+        <div class="card option-card" onclick="showCategories()">
+          📚 By Category
+          <div class="next">choose a topic</div>
+        </div>
       </div>
-      <div class="card option-card" onclick="showCategories()">
-        📚 By Category
-        <div class="next">choose a topic</div>
-      </div>
+      <div class="footer">${FOOTER_CREDIT}</div>
     </div>`;
 };
 
@@ -77,17 +88,20 @@ window.showRandomFact = function() {
   const fact = facts[randomIndex];
   
   app.innerHTML = `
-    <div style="width:100%">
-      <div class="nav-buttons">
-        <div class="back" onclick="goBack()">← Menu</div>
-        <div class="home" onclick="goHome()">🏠 Home</div>
-      </div>
-      <div class="card fact-card" onclick="showRandomFact()">
-        <div class="fact-text">${escapeHTML(fact.Fact)}</div>
-        <div class="next">
-          📖 tap for next • ${facts.length} facts
+    <div style="width:100%; display:flex; flex-direction:column; min-height:100vh;">
+      <div style="flex:1; display:flex; flex-direction:column;">
+        <div class="nav-buttons">
+          <div class="back" onclick="goBack()">← Menu</div>
+          <div class="home" onclick="goHome()">🏠 Home</div>
+        </div>
+        <div class="card fact-card" onclick="showRandomFact()">
+          <div class="fact-text">${escapeHTML(fact.Fact)}</div>
+          <div class="next">
+            📖 tap for next • ${facts.length} facts
+          </div>
         </div>
       </div>
+      <div class="footer">${FOOTER_CREDIT}</div>
     </div>`;
 };
 
@@ -99,12 +113,15 @@ window.showCategories = function() {
   const categories = [...new Set(facts.map(f => f.Category))].sort();
   
   app.innerHTML = `
-    <div style="width:100%">
-      <div class="nav-buttons">
-        <div class="back" onclick="goBack()">← Menu</div>
-        <div class="home" onclick="goHome()">🏠 Home</div>
+    <div style="width:100%; display:flex; flex-direction:column; min-height:100vh;">
+      <div style="flex:1; display:flex; flex-direction:column;">
+        <div class="nav-buttons">
+          <div class="back" onclick="goBack()">← Menu</div>
+          <div class="home" onclick="goHome()">🏠 Home</div>
+        </div>
+        <div class="category-grid"></div>
       </div>
-      <div class="category-grid"></div>
+      <div class="footer">${FOOTER_CREDIT}</div>
     </div>`;
   
   const grid = app.querySelector('.category-grid');
@@ -140,17 +157,20 @@ window.showCategoryFact = function() {
   const fact = currentCategoryFacts[Math.floor(Math.random() * currentCategoryFacts.length)];
   
   app.innerHTML = `
-    <div style="width:100%">
-      <div class="nav-buttons">
-        <div class="back" onclick="showCategories()">← Categories</div>
-        <div class="home" onclick="goHome()">🏠 Home</div>
-      </div>
-      <div class="card fact-card" onclick="showCategoryFact()">
-        <div class="fact-text">${escapeHTML(fact.Fact)}</div>
-        <div class="next">
-          📍 ${currentCategory} • ${currentCategoryFacts.length} facts • tap for next
+    <div style="width:100%; display:flex; flex-direction:column; min-height:100vh;">
+      <div style="flex:1; display:flex; flex-direction:column;">
+        <div class="nav-buttons">
+          <div class="back" onclick="showCategories()">← Categories</div>
+          <div class="home" onclick="goHome()">🏠 Home</div>
+        </div>
+        <div class="card fact-card" onclick="showCategoryFact()">
+          <div class="fact-text">${escapeHTML(fact.Fact)}</div>
+          <div class="next">
+            📍 ${currentCategory} • ${currentCategoryFacts.length} facts • tap for next
+          </div>
         </div>
       </div>
+      <div class="footer">${FOOTER_CREDIT}</div>
     </div>`;
 };
 
