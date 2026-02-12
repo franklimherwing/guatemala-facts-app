@@ -1,5 +1,5 @@
-// Guatemala Facts App - Version 1.8
-const APP_VERSION = "1.8";
+// Guatemala Facts App - Version 1.9
+const APP_VERSION = "1.9";
 const app = document.getElementById("app");
 
 // State management
@@ -28,7 +28,8 @@ function escapeHTML(text) {
 window.showStart = function() {
   app.innerHTML = `
     <div class="card start-card" onclick="showOptions()">
-      START
+      🇬🇹
+      <div style="font-size: 0.7em; margin-top: 20px;">START</div>
       <div class="next">Version ${APP_VERSION}</div>
     </div>`;
 };
@@ -36,9 +37,19 @@ window.showStart = function() {
 window.showOptions = function() {
   app.innerHTML = `
     <div style="width:100%">
-      <div class="card option-card" onclick="startRandom()">🎲 Random Game</div>
-      <div class="card option-card" onclick="showCategories()">📚 By Category</div>
+      <div class="card option-card" onclick="startRandom()">
+        🎲 Random Game
+        <div class="next">surprise me!</div>
+      </div>
+      <div class="card option-card" onclick="showCategories()">
+        📚 By Category
+        <div class="next">choose a topic</div>
+      </div>
     </div>`;
+};
+
+window.goHome = function() {
+  showStart();
 };
 
 window.goBack = function() {
@@ -66,9 +77,17 @@ window.showRandomFact = function() {
   const fact = facts[randomIndex];
   
   app.innerHTML = `
-    <div class="card fact-card" onclick="showRandomFact()">
-      ${escapeHTML(fact.Fact)}
-      <div class="next">📖 click for next fact (${facts.length} total)</div>
+    <div style="width:100%">
+      <div class="nav-buttons">
+        <div class="back" onclick="goBack()">← Menu</div>
+        <div class="home" onclick="goHome()">🏠 Home</div>
+      </div>
+      <div class="card fact-card" onclick="showRandomFact()">
+        <div class="fact-text">${escapeHTML(fact.Fact)}</div>
+        <div class="next">
+          📖 tap for next • ${facts.length} facts
+        </div>
+      </div>
     </div>`;
 };
 
@@ -79,10 +98,14 @@ window.showCategories = function() {
   // Get unique categories and sort them
   const categories = [...new Set(facts.map(f => f.Category))].sort();
   
-  app.innerHTML = `<div style="width:100%">
-    <div class="back" onclick="goBack()">← Back to menu</div>
-    <div class="category-grid"></div>
-  </div>`;
+  app.innerHTML = `
+    <div style="width:100%">
+      <div class="nav-buttons">
+        <div class="back" onclick="goBack()">← Menu</div>
+        <div class="home" onclick="goHome()">🏠 Home</div>
+      </div>
+      <div class="category-grid"></div>
+    </div>`;
   
   const grid = app.querySelector('.category-grid');
   if (!grid) return;
@@ -118,11 +141,14 @@ window.showCategoryFact = function() {
   
   app.innerHTML = `
     <div style="width:100%">
-      <div class="back" onclick="showCategories()">← Back to categories</div>
+      <div class="nav-buttons">
+        <div class="back" onclick="showCategories()">← Categories</div>
+        <div class="home" onclick="goHome()">🏠 Home</div>
+      </div>
       <div class="card fact-card" onclick="showCategoryFact()">
-        ${escapeHTML(fact.Fact)}
+        <div class="fact-text">${escapeHTML(fact.Fact)}</div>
         <div class="next">
-          📍 ${currentCategory} • ${currentCategoryFacts.length} facts • click for next
+          📍 ${currentCategory} • ${currentCategoryFacts.length} facts • tap for next
         </div>
       </div>
     </div>`;
@@ -131,14 +157,22 @@ window.showCategoryFact = function() {
 // Keyboard navigation
 document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') {
-    showOptions();
+    goHome();
   }
   if (e.key === ' ' || e.key === 'Space') {
     e.preventDefault();
     const factCard = document.querySelector('.fact-card');
     if (factCard) factCard.click();
   }
+  if (e.key === 'b' || e.key === 'B') {
+    e.preventDefault();
+    const backButton = document.querySelector('.back');
+    if (backButton) backButton.click();
+  }
 });
+
+// Touch optimization for mobile
+document.addEventListener('touchstart', function(){}, {passive: true});
 
 // Service worker registration
 if ('serviceWorker' in navigator) {
