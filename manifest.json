@@ -1,7 +1,7 @@
 {
   "name": "Guatemala Facts App",
   "short_name": "GT Facts",
-  "description": "Learn fascinating facts about Guatemala's history, culture, food, and more",
+  "description": "Discover Guatemala's history, culture, and more - Built for Trinity EV Guatemala Mission 2026",
   "start_url": "/",
   "display": "standalone",
   "theme_color": "#2E7D32",
