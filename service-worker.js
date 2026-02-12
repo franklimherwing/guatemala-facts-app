@@ -1,5 +1,5 @@
 // Guatemala Facts App - Service Worker v1.10
-const CACHE_NAME = 'guatemala-facts-v1.10';
+const CACHE_NAME = 'guatemala-facts-v1.11';
 const urlsToCache = [
   '/',
   '/index.html',
