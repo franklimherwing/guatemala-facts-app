@@ -1,120 +1,99 @@
-// ===== Facts Flashcard App v2.0 =====
+let currentLanguage="ES";
+let map;
+let markers=[];
 
-let filteredFacts = [];
-let currentIndex = 0;
+document.addEventListener("DOMContentLoaded",()=>{
+renderFacts(facts);
+buildCategories();
+initMap();
+registerSW();
 
-// Elements
-const factText = document.getElementById("factText");
-const nextBtn = document.getElementById("nextBtn");
-const randomBtn = document.getElementById("randomBtn");
-const searchBox = document.getElementById("searchBox");
-const counter = document.getElementById("counter");
-const darkBtn = document.getElementById("darkBtn");
-const card = document.getElementById("card");
+document.getElementById("search").addEventListener("input",e=>{
+searchFacts(e.target.value);
+});
+});
 
-// ===== INIT =====
-function initApp() {
-    if (!Array.isArray(facts) || facts.length === 0) {
-        factText.textContent = "No facts loaded.";
-        return;
-    }
+function renderFacts(data){
+const container=document.getElementById("facts-container");
+container.innerHTML="";
 
-    filteredFacts = [...facts];
-    currentIndex = 0;
-    showFact();
+markers.forEach(m=>map.removeLayer(m));
+markers=[];
+
+data.forEach(f=>{
+if(!f.active) return;
+
+container.innerHTML+=`
+<div class="fact-card">
+<h3>${f.title}</h3>
+<img src="${f.imageUrl}" loading="lazy">
+<p>${f.fact}</p>
+<button onclick="toggleFavorite(${f.id})">⭐</button>
+</div>
+`;
+
+if(f.latitude && f.longitude){
+const marker=L.marker([f.latitude,f.longitude]).addTo(map)
+.bindPopup(f.title);
+markers.push(marker);
+}
+});
 }
 
-// ===== SHOW FACT =====
-function showFact() {
+function buildCategories(){
+const cats=[...new Set(facts.map(f=>f.category))];
+const container=document.getElementById("categories");
+container.innerHTML="";
 
-    if (filteredFacts.length === 0) {
-        factText.textContent = "No matching facts.";
-        counter.textContent = "0 / 0";
-        return;
-    }
-
-    card.style.opacity = 0;
-
-    setTimeout(() => {
-        factText.textContent = filteredFacts[currentIndex];
-        counter.textContent =
-            (currentIndex + 1) + " / " + filteredFacts.length;
-        card.style.opacity = 1;
-    }, 180);
+cats.forEach(c=>{
+container.innerHTML+=`
+<button onclick="filterCategory('${c}')">${c}</button>
+`;
+});
 }
 
-// ===== NEXT FACT =====
-nextBtn.addEventListener("click", () => {
-
-    if (filteredFacts.length === 0) return;
-
-    currentIndex++;
-
-    if (currentIndex >= filteredFacts.length) {
-        currentIndex = 0;
-    }
-
-    showFact();
-});
-
-// ===== RANDOM FACT =====
-randomBtn.addEventListener("click", () => {
-
-    if (filteredFacts.length === 0) return;
-
-    currentIndex = Math.floor(
-        Math.random() * filteredFacts.length
-    );
-
-    showFact();
-});
-
-// ===== SEARCH =====
-searchBox.addEventListener("input", () => {
-
-    const value = searchBox.value.trim().toLowerCase();
-
-    filteredFacts = facts.filter(f =>
-        f.toLowerCase().includes(value)
-    );
-
-    currentIndex = 0;
-    showFact();
-});
-
-// ===== DARK MODE =====
-darkBtn.addEventListener("click", () => {
-    document.body.classList.toggle("dark");
-});
-
-// ===== SWIPE SUPPORT =====
-let startX = 0;
-
-card.addEventListener("touchstart", e => {
-    startX = e.touches[0].clientX;
-});
-
-card.addEventListener("touchend", e => {
-
-    const endX = e.changedTouches[0].clientX;
-    const diff = startX - endX;
-
-    if (Math.abs(diff) < 50) return;
-
-    if (diff > 0) {
-        nextBtn.click(); // swipe left
-    } else {
-        randomBtn.click(); // swipe right
-    }
-});
-
-// ===== SERVICE WORKER =====
-if ("serviceWorker" in navigator) {
-    window.addEventListener("load", () => {
-        navigator.serviceWorker.register("service-worker.js")
-            .catch(err => console.log("SW failed:", err));
-    });
+function filterCategory(cat){
+renderFacts(facts.filter(f=>f.category===cat));
 }
 
-// ===== START APP =====
-initApp();
+function searchFacts(term){
+const filtered=facts.filter(f=>
+f.title.toLowerCase().includes(term.toLowerCase())
+);
+renderFacts(filtered);
+}
+
+function randomFact(){
+const rand=facts[Math.floor(Math.random()*facts.length)];
+renderFacts([rand]);
+}
+
+function toggleFavorite(id){
+let favs=JSON.parse(localStorage.getItem("favorites")||"[]");
+
+if(favs.includes(id)){
+favs=favs.filter(f=>f!==id);
+}else{
+favs.push(id);
+}
+localStorage.setItem("favorites",JSON.stringify(favs));
+}
+
+function toggleLanguage(){
+currentLanguage=currentLanguage==="ES"?"EN":"ES";
+alert("Language: "+currentLanguage);
+}
+
+function initMap(){
+map=L.map('map').setView([15.5,-90.25],7);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+maxZoom:18
+}).addTo(map);
+}
+
+function registerSW(){
+if("serviceWorker" in navigator){
+navigator.serviceWorker.register("service-worker.js");
+}
+}
