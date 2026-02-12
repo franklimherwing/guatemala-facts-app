@@ -1,8 +1,22 @@
 {
-"name":"Facts Flashcards v2.0",
-"short_name":"FactsApp",
-"start_url":"index.html",
+"name":"Guatemala Facts App",
+"short_name":"GT Facts",
+"start_url":"/index.html",
 "display":"standalone",
 "background_color":"#ffffff",
-"theme_color":"#1e293b"
+"theme_color":"#003366",
+"description":"Guatemala Facts App Version 1.4",
+"version":"1.4",
+"icons":[
+{
+"src":"icon-192.png",
+"sizes":"192x192",
+"type":"image/png"
+},
+{
+"src":"icon-512.png",
+"sizes":"512x512",
+"type":"image/png"
+}
+]
 }
