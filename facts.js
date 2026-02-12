@@ -1,12 +1,12 @@
 /* Guatemala Facts App
-   Version 1.10
+   Version 1.11
    Consolidated Local Database File
 */
 
 // CHANGE THIS LINE AT THE VERY TOP:
 // Remove any existing version comment and add this exact comment:
 
-/* ===== GUATEMALA FACTS DATABASE v1.9 ===== */
+/* ===== GUATEMALA FACTS DATABASE v1.11 ===== */
 
 // The rest of your facts.js file remains EXACTLY THE SAME
 // Only update the version comment at the top
