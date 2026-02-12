@@ -1,5 +1,5 @@
-// Guatemala Facts App - Version 1.7
-const APP_VERSION = "1.7";
+// Guatemala Facts App - Version 1.8
+const APP_VERSION = "1.8";
 const app = document.getElementById("app");
 
 // State management
@@ -7,47 +7,56 @@ let lastFactIndex = -1;
 let currentCategoryFacts = [];
 let currentCategory = null;
 
+// Debug - verify facts loaded
+console.log("Guatemala Facts App v" + APP_VERSION);
+console.log("Facts loaded:", facts ? facts.length : 0);
+
 // Initialize app
-showStart();
+window.onload = function() {
+  showStart();
+};
 
 // Helper function to escape HTML and prevent XSS
 function escapeHTML(text) {
+  if (!text) return "";
   const div = document.createElement('div');
   div.textContent = text;
   return div.innerHTML;
 }
 
 // Navigation functions
-function showStart() {
+window.showStart = function() {
   app.innerHTML = `
     <div class="card start-card" onclick="showOptions()">
       START
       <div class="next">Version ${APP_VERSION}</div>
     </div>`;
-}
+};
 
-function showOptions() {
+window.showOptions = function() {
   app.innerHTML = `
     <div style="width:100%">
       <div class="card option-card" onclick="startRandom()">🎲 Random Game</div>
       <div class="card option-card" onclick="showCategories()">📚 By Category</div>
     </div>`;
-}
+};
 
-function goBack() {
+window.goBack = function() {
   showOptions();
-}
+};
 
 // Random mode
-function startRandom() {
+window.startRandom = function() {
   if (!facts || facts.length === 0) {
     app.innerHTML = `<div class="card fact-card">No facts available</div>`;
     return;
   }
   showRandomFact();
-}
+};
 
-function showRandomFact() {
+window.showRandomFact = function() {
+  if (!facts || facts.length === 0) return;
+  
   let randomIndex;
   do {
     randomIndex = Math.floor(Math.random() * facts.length);
@@ -61,10 +70,10 @@ function showRandomFact() {
       ${escapeHTML(fact.Fact)}
       <div class="next">📖 click for next fact (${facts.length} total)</div>
     </div>`;
-}
+};
 
 // Category mode
-function showCategories() {
+window.showCategories = function() {
   if (!facts || facts.length === 0) return;
   
   // Get unique categories and sort them
@@ -76,17 +85,18 @@ function showCategories() {
   </div>`;
   
   const grid = app.querySelector('.category-grid');
+  if (!grid) return;
   
   categories.forEach(category => {
     const card = document.createElement('div');
     card.className = 'card category-card';
     card.textContent = category;
-    card.addEventListener('click', () => startCategory(category));
+    card.onclick = function() { startCategory(category); };
     grid.appendChild(card);
   });
-}
+};
 
-function startCategory(category) {
+window.startCategory = function(category) {
   currentCategory = category;
   currentCategoryFacts = facts.filter(f => f.Category === category);
   
@@ -96,9 +106,14 @@ function startCategory(category) {
   }
   
   showCategoryFact();
-}
+};
 
-function showCategoryFact() {
+window.showCategoryFact = function() {
+  if (!currentCategoryFacts || currentCategoryFacts.length === 0) {
+    showCategories();
+    return;
+  }
+  
   const fact = currentCategoryFacts[Math.floor(Math.random() * currentCategoryFacts.length)];
   
   app.innerHTML = `
@@ -111,10 +126,10 @@ function showCategoryFact() {
         </div>
       </div>
     </div>`;
-}
+};
 
 // Keyboard navigation
-document.addEventListener('keydown', (e) => {
+document.addEventListener('keydown', function(e) {
   if (e.key === 'Escape') {
     showOptions();
   }
@@ -128,5 +143,7 @@ document.addEventListener('keydown', (e) => {
 // Service worker registration
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('service-worker.js')
-    .catch(err => console.error('SW registration failed:', err));
+    .catch(function(err) {
+      console.error('SW registration failed:', err);
+    });
 }
