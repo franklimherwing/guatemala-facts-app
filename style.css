@@ -1,4 +1,4 @@
-/* Guatemala Facts App - Version 1.10 */
+/* Guatemala Facts App - Version 1.11 */
 :root {
   --primary: #2E7D32;
   --secondary: #1E88E5;
@@ -152,7 +152,7 @@ body {
 
 /* Footer credit styles - NEW for v1.10 */
 .footer {
-  font-size: 12px;
+  font-size: 16px;
   color: var(--footer-text);
   text-align: center;
   padding: 16px 8px;
