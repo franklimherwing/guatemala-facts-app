@@ -1,37 +1,51 @@
-const CACHE_NAME="guatemala-facts-v1.6";
-
-const FILES_TO_CACHE=[
-"./",
-"index.html",
-"style.css",
-"app.js",
-"facts.js",
-"manifest.json"
+// Guatemala Facts App - Service Worker v1.9
+const CACHE_NAME = 'guatemala-facts-v1.9';
+const urlsToCache = [
+  '/',
+  '/index.html',
+  '/style.css',
+  '/app.js',
+  '/facts.js',
+  '/manifest.json'
 ];
 
-self.addEventListener("install",event=>{
-self.skipWaiting();
-event.waitUntil(
-caches.open(CACHE_NAME).then(cache=>cache.addAll(FILES_TO_CACHE))
-);
+// Install service worker
+self.addEventListener('install', event => {
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then(cache => {
+        console.log('Service worker cache opened');
+        return cache.addAll(urlsToCache);
+      })
+  );
 });
 
-self.addEventListener("activate",event=>{
-event.waitUntil(
-caches.keys().then(keys=>{
-return Promise.all(
-keys.filter(k=>k!==CACHE_NAME)
-.map(k=>caches.delete(k))
-);
-})
-);
-self.clients.claim();
+// Fetch from cache first, then network
+self.addEventListener('fetch', event => {
+  event.respondWith(
+    caches.match(event.request)
+      .then(response => {
+        if (response) {
+          return response;
+        }
+        return fetch(event.request);
+      })
+  );
 });
 
-self.addEventListener("fetch",event=>{
-event.respondWith(
-caches.match(event.request).then(response=>{
-return response||fetch(event.request);
-})
-);
+// Clean up old caches
+self.addEventListener('activate', event => {
+  const cacheWhitelist = [CACHE_NAME];
+  event.waitUntil(
+    caches.keys().then(cacheNames => {
+      return Promise.all(
+        cacheNames.map(cacheName => {
+          if (cacheWhitelist.indexOf(cacheName) === -1) {
+            console.log('Deleting old cache:', cacheName);
+            return caches.delete(cacheName);
+          }
+        })
+      );
+    })
+  );
 });
