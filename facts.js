@@ -1,10 +1,10 @@
 /* Guatemala Facts App
-   Version 1.7
+   Version 1.8
    Consolidated Local Database File
 */
 
 const facts = [
-  // HISTORY (31 facts)
+  // HISTORY (38 facts)
   {
     Category: "History",
     Fact: "The ancient Maya built advanced cities across Guatemala."
@@ -158,7 +158,7 @@ const facts = [
     Fact: "Historic railways once connected major ports and cities."
   },
 
-  // ZACAPA (42 facts - all consolidated)
+  // ZACAPA (119 facts)
   {
     Category: "Zacapa",
     Fact: "Zacapa is known as one of the hottest regions in Guatemala."
@@ -738,7 +738,7 @@ const facts = [
     Fact: "Many international missions partner with local churches throughout Guatemala."
   },
 
-  // CULTURE (27 facts)
+  // CULTURE (42 facts)
   {
     Category: "Culture",
     Fact: "Traditional Mayan clothing uses bright woven patterns."
@@ -908,7 +908,7 @@ const facts = [
     Fact: "Zacapa City and Estanzuela are included in Guatemala's tourism picturesque towns initiative."
   },
 
-  // FOOD (26 facts)
+  // FOOD (35 facts)
   {
     Category: "Food",
     Fact: "Corn tortillas are a daily staple in most Guatemalan meals."
@@ -1050,7 +1050,7 @@ const facts = [
     Fact: "Paches are potato-based tamales eaten on Thursdays."
   },
 
-  // GEOGRAPHY (24 facts)
+  // GEOGRAPHY (32 facts)
   {
     Category: "Geography",
     Fact: "Guatemala has more than 30 volcanoes."
@@ -1180,7 +1180,7 @@ const facts = [
     Fact: "Volcan Fuego is one of the most active volcanoes in Central America."
   },
 
-  // BIBLE/RELIGION (20 facts - consolidated)
+  // RELIGION (33 facts)
   {
     Category: "Religion",
     Fact: "Christian teachings influence many Guatemalan communities."
@@ -1314,7 +1314,7 @@ const facts = [
     Fact: "The main cathedral sits on the central plaza and dates back to the 18th century."
   },
 
-  // CHURCH (16 facts)
+  // CHURCH (17 facts)
   {
     Category: "Church",
     Fact: "Churches play a central role in community gatherings."
@@ -1384,7 +1384,7 @@ const facts = [
     Fact: "Weekly Bible studies are common among local churches."
   },
 
-  // LANDMARKS (15 facts)
+  // LANDMARKS (19 facts)
   {
     Category: "Landmarks",
     Fact: "Tikal is one of the largest Mayan archaeological sites."
@@ -1462,7 +1462,7 @@ const facts = [
     Fact: "Antigua is a UNESCO World Heritage city known for colonial ruins and cobblestone streets."
   },
 
-  // LANGUAGE (12 facts)
+  // LANGUAGE (16 facts)
   {
     Category: "Language",
     Fact: "Spanish is the official language of Guatemala."
@@ -1528,7 +1528,7 @@ const facts = [
     Fact: "Some schools teach both Spanish and indigenous languages."
   },
 
-  // TRAVEL (22 facts)
+  // TRAVEL (31 facts)
   {
     Category: "Travel",
     Fact: "Colorful converted buses are common for public transport."
@@ -1654,7 +1654,7 @@ const facts = [
     Fact: "Coban hosts orchid farms and botanical gardens."
   },
 
-  // NATURE (16 facts)
+  // NATURE (30 facts)
   {
     Category: "Nature",
     Fact: "Tikal is surrounded by dense rainforest filled with wildlife."
@@ -1780,7 +1780,7 @@ const facts = [
     Fact: "Lake Atitlan is surrounded by volcanoes."
   },
 
-  // WILDLIFE (11 facts)
+  // WILDLIFE (15 facts)
   {
     Category: "Wildlife",
     Fact: "The resplendent quetzal is Guatemala's national bird."
@@ -1842,7 +1842,7 @@ const facts = [
     Fact: "The national bird lives in cloud forests and symbolizes freedom."
   },
 
-  // ECONOMY (12 facts)
+  // ECONOMY (19 facts)
   {
     Category: "Economy",
     Fact: "Guatemala is one of the world's top producers of high-quality coffee."
@@ -1920,7 +1920,7 @@ const facts = [
     Fact: "Zacapa is famous internationally for premium rum production."
   },
 
-  // CITY FACTS (10 facts)
+  // CITY FACTS (17 facts)
   {
     Category: "City Facts",
     Fact: "Guatemala City is the largest city in Central America by population."
@@ -2136,3 +2136,4 @@ const facts = [
 ];
 
 /* ===== END GUATEMALA FACTS DATABASE ===== */
+// DO NOT ADD ANY CODE AFTER THIS LINE
