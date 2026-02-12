@@ -1,5 +1,5 @@
-// Guatemala Facts App - Service Worker v1.9
-const CACHE_NAME = 'guatemala-facts-v1.9';
+// Guatemala Facts App - Service Worker v1.10
+const CACHE_NAME = 'guatemala-facts-v1.10';
 const urlsToCache = [
   '/',
   '/index.html',
@@ -14,7 +14,7 @@ self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => {
-        console.log('Service worker cache opened');
+        console.log('Service worker cache opened v1.10');
         return cache.addAll(urlsToCache);
       })
   );
