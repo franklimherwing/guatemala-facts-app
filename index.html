@@ -1,41 +1,34 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Facts Flashcards v2.0</title>
-<link rel="stylesheet" href="styles.css">
+<title>Guatemala Facts App v1.4</title>
+
+<link rel="stylesheet" href="style.css">
 <link rel="manifest" href="manifest.json">
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 </head>
 
 <body>
 
-<div class="app">
-
 <header>
-<h1>Facts Flashcards</h1>
-<span id="version">v2.0</span>
+<h1>Guatemala Facts App</h1>
+<span class="version">v1.4</span>
 </header>
 
 <div class="controls">
-<input id="searchBox" placeholder="Search facts...">
-<button id="randomBtn">Random</button>
-<button id="darkBtn">Dark</button>
+<input id="search" placeholder="Buscar / Search">
+<button onclick="randomFact()">🎲 Random</button>
+<button onclick="toggleLanguage()">🌐 ES/EN</button>
 </div>
 
-<main>
-<div id="card" class="card">
-<p id="factText"></p>
-</div>
+<div id="categories"></div>
+<div id="facts-container"></div>
 
-<div class="progress">
-<span id="counter"></span>
-</div>
-
-<button id="nextBtn">Next</button>
-</main>
-
-</div>
+<div id="map"></div>
 
 <script src="facts.js"></script>
 <script src="app.js"></script>
