@@ -1,12 +1,12 @@
 {
-"name":"Guatemala Facts App",
+"name":"Guatemala Facts Flashcards",
 "short_name":"GT Facts",
 "start_url":"/index.html",
 "display":"standalone",
 "background_color":"#ffffff",
 "theme_color":"#003366",
-"description":"Guatemala Facts App Version 1.4",
-"version":"1.4",
+"description":"Guatemala Facts Flashcard Game Version 1.5",
+"version":"1.5",
 "icons":[
 {
 "src":"icon-192.png",
