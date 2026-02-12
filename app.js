@@ -1,99 +1,75 @@
+const APP_VERSION="1.5";
+
 const app=document.getElementById("app");
-let currentFacts=[];
-let index=0;
 
-document.addEventListener("DOMContentLoaded",()=>{
-showStart();
-registerSW();
-});
-
-function showStart(){
-app.innerHTML=`
-<div class="flashcard start" onclick="showModes()">
-<h2>START</h2>
-<div class="next">next</div>
-</div>
-`;
+function clearApp(){
+app.innerHTML="";
 }
 
-function showModes(){
-app.innerHTML=`
-<div class="flashcard large" onclick="startRandom()">
-Random Game
-<div class="next">next</div>
-</div>
+function createCard(text,size,click){
+const div=document.createElement("div");
+div.className="card "+size;
+div.innerHTML=text+"<div class='small-next'>next</div>";
+div.onclick=click;
+return div;
+}
 
-<div class="flashcard large" onclick="showCategories()">
-By Category
-<div class="next">next</div>
-</div>
-`;
+function showStart(){
+clearApp();
+app.appendChild(createCard("START","big",showMenu));
+}
+
+function showMenu(){
+clearApp();
+
+app.appendChild(createCard("Random Game","big",startRandom));
+app.appendChild(createCard("By Category","big",showCategories));
 }
 
 function startRandom(){
-currentFacts=[...facts].filter(f=>f.active);
-shuffle(currentFacts);
-index=0;
-showFact();
+let shuffled=[...facts].sort(()=>Math.random()-0.5);
+playFacts(shuffled);
 }
 
 function showCategories(){
-const cats=[...new Set(facts.map(f=>f.category))];
+clearApp();
 
-app.innerHTML="";
+let categories=[...new Set(facts.map(f=>f.Category))];
 
-cats.forEach(c=>{
-app.innerHTML+=`
-<div class="flashcard medium" onclick="startCategory('${c}')">
-${c}
-<div class="next">next</div>
-</div>
-`;
+categories.forEach(cat=>{
+app.appendChild(createCard(cat,"medium",()=>{
+let filtered=facts.filter(f=>f.Category===cat);
+playFacts(filtered);
+}));
 });
 }
 
-function startCategory(cat){
-currentFacts=facts.filter(f=>f.category===cat && f.active);
-shuffle(currentFacts);
-index=0;
-showFact();
-}
+function playFacts(list){
+let index=0;
 
-function showFact(){
-if(currentFacts.length===0){
-showStart();
-return;
-}
+function next(){
+clearApp();
 
-const f=currentFacts[index];
+if(index>=list.length) index=0;
 
-app.innerHTML=`
-<div class="flashcard large" onclick="nextFact()">
-<h3>${f.title}</h3>
-<p>${f.fact}</p>
-<div class="next">next</div>
-</div>
-`;
-}
+let fact=list[index];
 
-function nextFact(){
+app.appendChild(createCard(
+"<b>"+fact.Title+"</b><br><br>"+fact.Fact,
+"big",
+()=>{
 index++;
-if(index>=currentFacts.length){
-index=0;
-shuffle(currentFacts);
+next();
 }
-showFact();
+));
+
 }
 
-function shuffle(array){
-for(let i=array.length-1;i>0;i--){
-const j=Math.floor(Math.random()*(i+1));
-[array[i],array[j]]=[array[j],array[i]];
-}
+next();
 }
 
-function registerSW(){
-if("serviceWorker" in navigator){
-navigator.serviceWorker.register("service-worker.js");
-}
+showStart();
+
+if('serviceWorker' in navigator){
+navigator.serviceWorker.register('service-worker.js');
 }
