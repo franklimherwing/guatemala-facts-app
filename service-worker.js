@@ -1,20 +1,22 @@
-const CACHE_NAME="facts-v2.0";
+const CACHE_NAME="gtfacts-v1.4";
 
-const urls=[
-"index.html",
-"styles.css",
-"app.js",
-"facts.js"
+const FILES_TO_CACHE=[
+"/",
+"/index.html",
+"/style.css",
+"/app.js",
+"/facts.js",
+"/manifest.json"
 ];
 
 self.addEventListener("install",e=>{
 e.waitUntil(
-caches.open(CACHE_NAME).then(c=>c.addAll(urls))
+caches.open(CACHE_NAME).then(cache=>cache.addAll(FILES_TO_CACHE))
 );
 });
 
 self.addEventListener("fetch",e=>{
 e.respondWith(
-caches.match(e.request).then(r=>r||fetch(e.request))
+caches.match(e.request).then(res=>res||fetch(e.request))
 );
 });
